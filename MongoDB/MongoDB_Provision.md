@@ -9,7 +9,7 @@ sudo apt update -y
 sudo apt upgrade -y
 ```
 
-## Step 2
+## Step 2sys
 This command will import the MongoDB public GPG key.
 ```
 curl -fsSL https://pgp.mongodb.com/server-8.0.asc | \
@@ -59,4 +59,21 @@ sudo systemctl start mongod
 This command will start during system boot.
 ```
 sudo systemctl enable mongod
+```
+## Step 7
+
+These commands will:
+1. Create a backup of the config file, in case it's needed
+2. Replace the bindIp with 0.0.0.0, allowing any IP to be able to connect
+```
+sudo cp /etc/mongod.conf /etc/mongod.conf.bak
+sudo sed -i 's|bindIp: 127.0.0.1|bindIp: 0.0.0.0|' /etc/mongod.conf
+```
+
+## Step 8
+
+If you have already started MongoDB in Step 6, restart MongoDB using:
+
+```
+sudo systemctl restart mongod
 ```
