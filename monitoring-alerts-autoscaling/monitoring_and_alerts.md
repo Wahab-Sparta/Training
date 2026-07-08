@@ -1,4 +1,4 @@
-# Monitoring, alert management and auto scaling
+# Monitoring and Alert Management
 
 ## Performance Testing
 
