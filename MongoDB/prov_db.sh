@@ -1,6 +1,6 @@
 #! /bin/bash
 
-## TESTED: 06/07/2026
+## TESTED: 07/07/2026
 ## TESTED BY: Wahab
 ## TESTED ON: AWS
 ## AIM: Work as a script + user data on a fresh Ubuntu 24.04 LTS VM
