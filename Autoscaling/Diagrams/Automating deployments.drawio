@@ -1,0 +1,62 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="sxl2lPHE-d2UPyeNlAeP">
+    <mxGraphModel dx="1141" dy="631" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Developing higher levels of automation with app deployment on VMs&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="438" x="195" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-2" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="160" y="130" as="sourcePoint" />
+            <mxPoint x="160" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" value="Level of Automation" vertex="1">
+          <mxGeometry height="100" width="50" x="90" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-4" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="170" y="120" as="sourcePoint" />
+            <mxPoint x="670" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Speed of getting an app running" vertex="1">
+          <mxGeometry height="30" width="216" x="306" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-17" edge="1" parent="1" source="eBsVNEH6tQEVrQ5KFzXe-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="eBsVNEH6tQEVrQ5KFzXe-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-24" edge="1" parent="1" source="eBsVNEH6tQEVrQ5KFzXe-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="eBsVNEH6tQEVrQ5KFzXe-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="540" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Stage 1&lt;div&gt;Manual running&lt;/div&gt;&lt;div&gt;Have to SSH in&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="170" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-19" edge="1" parent="1" source="eBsVNEH6tQEVrQ5KFzXe-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="eBsVNEH6tQEVrQ5KFzXe-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-23" edge="1" parent="1" source="eBsVNEH6tQEVrQ5KFzXe-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="eBsVNEH6tQEVrQ5KFzXe-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="540" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Stage 2&lt;div&gt;Bash Scripting&lt;/div&gt;&lt;div&gt;Still have to SSH in&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="250" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-16" edge="1" parent="1" source="eBsVNEH6tQEVrQ5KFzXe-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="eBsVNEH6tQEVrQ5KFzXe-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;Stage 3&amp;nbsp;&lt;div&gt;User data&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="330" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="eBsVNEH6tQEVrQ5KFzXe-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Stage 4&lt;div&gt;&lt;div&gt;Using AMIs + a little bit of user data to run the app&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="480" y="370" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
