@@ -3,7 +3,10 @@
 - [AWS S3 Storage](#aws-s3-storage)
   - [What is a S3 storage](#what-is-a-s3-storage)
   - [Installing AWS CLI on Ubuntu 24.04 LTS](#installing-aws-cli-on-ubuntu-2404-lts)
+  - [Configure AWS CLI](#configure-aws-cli)
+  - [AWS CLI S3 Commands](#aws-cli-s3-commands)
   - [Python](#python)
+  - [Python Scripts](#python-scripts)
 
 <br>
 
