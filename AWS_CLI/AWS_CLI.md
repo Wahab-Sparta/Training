@@ -98,7 +98,7 @@ Remove file from bucket:
 aws s3 rm s3://tech610-wahab-first-bucket/test.txt
 ```
 
-‼️WILL DELETE ALL FILES WITHOUT ASKING FOR CONFIRMATION
+‼️WILL DELETE ALL FILES WITHOUT ASKING FOR CONFIRMATION  
 Remove all files from bucket:
 ```
 aws s3 rm s3://tech610-wahab-first-bucket --recursive
@@ -109,7 +109,7 @@ Delete a bucket:
 aws s3 rb s3://tech610-wahab-first-bucket
 ```
 
-‼️WILL DELETE ALL FILES AND THE BUCKET ITSELF WITHOUT ASKING FOR CONFIRMATION:
+‼️WILL DELETE ALL FILES AND THE BUCKET ITSELF WITHOUT ASKING FOR CONFIRMATION:  
 Delete a bucket with files in it 
 ```
 aws s3 rb s3://tech610-wahab-first-bucket --force
