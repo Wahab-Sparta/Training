@@ -1,5 +1,12 @@
 # Creating your own VPC
 
+- [Creating your own VPC](#creating-your-own-vpc)
+  - [Creating the VPC](#creating-the-vpc)
+  - [Creating Public \& Private Subnets](#creating-public--private-subnets)
+  - [Creating an Internet Gateway and attaching to VPC](#creating-an-internet-gateway-and-attaching-to-vpc)
+  - [Creating a Route Table and adding routes](#creating-a-route-table-and-adding-routes)
+  - [Creating the App and DB VMs](#creating-the-app-and-db-vms)
+
 This document will be detailing how to create a 2 Tier VPC to run our Tic Tac Toe app with MongoDB.
 
 Below will show how to:
@@ -10,7 +17,7 @@ Below will show how to:
 1. Create a route table
 1. Connect all the services mentioned for a secure VPC
 
-## 
+---
 
 ![alt text](<Diagrams/Understanding VPCs.png>)
 
@@ -26,12 +33,14 @@ Below will show how to:
 1. Select the VPC you have just created.
 1. Enter a name for your public subnet.
 1. Select availability zone 1A.
-1. In "1Pv4 subnet CIDR block" enter "10.0.2.0/24".
+1. In "IPv4 subnet CIDR block" enter "10.0.2.0/24".
+   
+   📝Note: This will allow 256 IP Addresses
 1. Click "add new subnet".
-1. Enter a name for your private subnet.
-1. Select availability zone 1B.
-1. In "1Pv4 subnet CIDR block" enter "10.0.3.0/24".
-1. Click "Create Subnet".
+2. Enter a name for your private subnet.
+3. Select availability zone 1B.
+4. In "IPv4 subnet CIDR block" enter "10.0.3.0/24".
+5. Click "Create Subnet".
 
 ## Creating an Internet Gateway and attaching to VPC
 
