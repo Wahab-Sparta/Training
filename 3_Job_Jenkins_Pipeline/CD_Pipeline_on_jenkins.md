@@ -85,7 +85,7 @@ To create Job 1 on Jenkins:
   npm ci
   npm test
 ```
-These commands will go into your app directory, do a clean install of the app and then run all the tests.
+These commands allow the agent to go into your app directory, do a clean install of the app and then run all the tests.
 
  **COMPLETE THIS LAST STEP ONLY AFTER COMPLETING JOB 2**
   * Under "Post-build Actions" click "Add post-build action" and choose "Build other projects".
@@ -117,7 +117,7 @@ This method will use Execute Shell and only use Git commands.
   git merge origin/dev
   git push origin main
 ```
-This code will switch to the main branch, merge with the dev branch and push the merge to main.
+With these commands the agent will switch to the main branch, merge with the dev branch and push the merge to main.
 
 ---
 
