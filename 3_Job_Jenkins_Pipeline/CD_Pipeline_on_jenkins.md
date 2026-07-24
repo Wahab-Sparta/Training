@@ -68,7 +68,7 @@ To create a Webhook on GitHub:
 2. Click on the Settings tab for your repo.
 3. Click on Webhooks and then click "Add webhook"
 4. Enter your entire Jenkins server IP (Make sure to remember the port number if needed e.g. `127.0.0.1:8080`)
-5. Make sure "Just the push event" is selected as we only want the push event to trigger the webhook.
+5. Make sure the "Just the push event" is selected as we only want the push event to trigger the webhook.
 6. Click "Add webhook"
 
 Your webhook has now been created. In the steps below regarding how to create the Jobs in the Pipeline, it will show how Jenkins will listen to the Webhook to trigger the first Job.
@@ -85,7 +85,7 @@ To create Job 1 on Jenkins:
   3. Click "Discard old builds" and set the "Max# of builds to keep" to 5.   
   (This will keep only a max of 5 builds in your build history, you can change this to a higher number if you want to keep more builds.)
   4. Click "GitHub project" and enter your App GitHub link.
-  5. Under Source Code Management click "Git" and enter your SHH URL in "Repository URL". 
+  5. Under Source Code Management click "Git" and enter your SSH URL in "Repository URL". 
   6. Click "Add" under "Credentials" and choose "Jenkins".
      1. Change the "Kind" to "SSH Username with private key"
      2. Add an ID and Username for your key
@@ -114,7 +114,7 @@ These commands allow the agent to go into your app directory, do a clean install
 ## Job 2 - Merging
 
 For this job, you can copy the project from Job 1.
-  1. Create a new item, enter a name for your item and choose enter your Job 1 name at the bottom to copy from it.
+  1. Create a new item, enter a name for your item. At the bottom select your Job 1 project to copy from.
   2. Enter a description describing what your job will do.  
 
 ⚠️ **IF YOU COPIED PROJECT FROM JOB 1**  
@@ -128,15 +128,16 @@ There are a couple of different methods for merging your changes from dev to mai
 ### Method 1 - Git Commands
 This method will use Execute Shell and only use Git commands.
   1. Change the "Branches to build" under "Source Code Management" to "*/main"  
+  1. Under "Build Environment" select "SSH Agent" and select your Git SSH credentials created in Job 1  
   **IF YOU DIDN'T COPY PROJECT FROM JOB 1**
-     1. Under "Build Environment" select "SSH Agent" and select your Git SSH credentials created in Job 1
-     2. Click "Add build step" under "Build steps", then select "Execute Shell".
-  1. In the "Execute shell" block enter the following commands:
+     1. Click "Add build step" under "Build steps", then select "Execute Shell".
+  1. In the "Execute shell" block enter the following commands :
 ```
   git switch main
   git merge origin/dev
   git push origin main
 ```
+If you did copy the Job 1 project, make sure the commands from Job 1 are not present in this block.  
 With these commands the agent will switch to the main branch, merge with the dev branch and push the merge to main.
 
 ---
@@ -145,14 +146,13 @@ With these commands the agent will switch to the main branch, merge with the dev
 This method will use a pre-build merge and then push to git.
   1. Change the "Branches to build" under "Source Code Management" to "*/dev"
 
-  2. Remove the Build Step left behind from 
-  3. Click "Add" under "Source Code Management" and click "Merge before build". Inside the new block:
+  2. Click "Add" under "Source Code Management" and click "Merge before build". Inside the new block:
      1. Enter "origin" in "Name of repository"
      2. Enter "main" in "Branch to merge to"
      3. Enter "default" in "Merge strategy"
      4. Enter "--ff" in "Fast-forward mode"
-  4. Under "Post-build Actions" click "Add post-build action" and choose "Git Publisher" Inside the new block:
-     1. Select "Merge Results" (This will push the merge you did in pre-build)
+  3. Under "Post-build Actions" click "Add post-build action" and choose "Git Publisher". Inside the new block:
+     1. Select "Merge Results" (This will push the pre-build merge you did)
      2. Click "Add Branch"
      3. Enter "main" in "Branch to push"
      4. Enter "origin" in "Target remote name"  
@@ -160,8 +160,6 @@ This method will use a pre-build merge and then push to git.
 ⚠️ **IF YOU COPIED PROJECT FROM JOB 1**
 1. **Delete the "Execute Shell" block under "Build Steps"**  
    If you do not delete the "Execute Shell" block, your job may not run successfully.
-2. Deselect "SSH Agent" under "Build Environment"  
-   This isn't necessary, but the SSH Agent isn't used in this method.
 
 ---
 
@@ -178,8 +176,6 @@ This way technically does not do a merge, but will still push your changes from 
 ⚠️ **IF YOU COPIED PROJECT FROM JOB 1**
 1. **Delete the "Execute Shell" block under "Build Steps"**  
    If you do not delete the "Execute Shell" block, your job may not run successfully.
-2. Deselect "SSH Agent" under "Build Environment"  
-   This isn't necessary, but the SSH Agent isn't used in this method.  
 
 ---
 
@@ -193,7 +189,7 @@ If you do not do this, Job 2 will **NOT** trigger.
 
 ## Job 3 - Uploading to EC2
 For this job, you can copy the project from Job 1. 
-  1. Create a new item, enter a name for your item and choose enter your Job 3 name at the bottom to copy from it.
+  1. Create a new item, enter a name for your item. At the bottom select your Job 1 project to copy from.
   2. Enter a description describing what your job will do.
   3. Change the "Branches to build" under "Source Code Management" to "*/main"
   4. Under "Build Environment" select "SSH Agent", then click "Add" and choose "Jenkins"  
@@ -203,10 +199,11 @@ For this job, you can copy the project from Job 1.
      3. Under "Private Key", click "Enter directly" then click "Add".
      4. Paste your AWS private key entirely.  
      ⚠️ **Make sure to include "-----BEGIN RSA PRIVATE KEY-----" and "-----END RSA PRIVATE KEY-----". Every single character in your key is needed.**
-  5. Click on the "credentials" dropdown and choose the credentials you just created.
-  6. If you didn't copy the project from Job 1, click "Add build step" under "Build Steps" and choose "Execute shell"
+  1. Click on the "credentials" dropdown and choose the credentials you just created.  
+  **IF YOU DIDN'T COPY PROJECT FROM JOB 1**
+     1. Click "Add build step" under "Build steps", then select "Execute Shell".
 
-Next we need use the Execute Shell block to update the code in the live EC2 instance with the new code from your git repo. There are two ways of doing this, one with an `scp` command and one with an `rsync` command. Code may be different depending on where you have stored your app.
+Next we need use the Execute Shell block to update the code in the live EC2 instance with the new code from your git repo. There are two ways of doing this, one with an `scp` command and one with an `rsync` command. The following commands may be different depending on where you have stored your app.
 
 ---
 
@@ -255,24 +252,25 @@ sudo pm2 restart TTT
 echo "App has restarted with the changes"
 EOT
 ```
-* With this method, rsync will only updates any changes between the directories, instead of overwriting the entire directory.
+* With this method, rsync will only update any changes between the directories, instead of overwriting the entire directory.
 * `rsync -avze`:
-  * `-a` Copies the files recursively whilst preserving permissions and metadata.
-  * `-v` Prints information about what files rsync is transferring.
+  * `-a` Copies the files recursively whilst preserving permissions, ownership and other metadata.
+  * `-v` Prints information about the files rsync is transferring.
   * `-z` Compresses the file data during transfer to reduce network bandwidth.
   * `-e` Allows you to specify the remote shell (e.g. SSH) to use for the connection
 * `--rsync-path="sudo rsync"` This allows rsync to run as super user, allowing us to execute the command in the root directory.  
 
 📝NOTE: Remember to check if the path to your app directory is correct, otherwise it will try to copy or sync your app to the wrong directory.
+If you did copy the Job 1 project, make sure the commands from Job 1 are not present in this Job.
 
 ## Testing the Pipeline
-You can test your pipeline works by adding a date and time on line 100 in /app/server.js
+You can test your pipeline works by adding a date and time on line 100 in /app/server.js and pushing to GitHub.
 ![alt text](Images/serverjs_line100.png)  
 Once you push your changes, your pipeline should start running from Job 1, all the way to Job 3.
 
-If your timestamp shows up on the app (see below), then your pipeline worked!  
+If your timestamp shows up on the app (see example below), then your pipeline worked!  
 
-It's recommended to run your pipeline multiple times to see different changes. An example is below of the app running with 2 different hardcoded timestamps.  
+It's recommended to run your pipeline multiple times to see different changes. An example is given below of the app running with 2 different hardcoded timestamps. Both were updated using the pipeline.  
 ![alt text](Images/timestap_1640.png)
 ![alt text](Images/timestamp_1643.png)
 
@@ -299,7 +297,7 @@ Solution: Using `--rsync-path="sudo rsync"` allowed me to run rsync as a super u
 
 This task was a really good learning experience for me. I did a lot of testing with Jenkins to see what works and how things work.  
 
-Specifically, during Job 2, I learnt about how merging branches in git works. There was a method I figured out on Jenkins that doesn't actually merge the two branches, but just simply moves the branch pointer (the HEAD of the branch) to the latest commit. I figured out that this was a type of merge, it's called a fast-forward merge.  
+Specifically, during Job 2, I learnt about how merging branches in git works. There was a method I figured out on Jenkins that doesn't actually merge the two branches, but just simply moves the branch pointer (the HEAD of the branch) to the latest commit. I found out that this was a type of merge, it's called a fast-forward merge.  
 
 I also gained experience with the SCP and RSYNC commands. I had used SCP in the past, but RSYNC was brand new to me. So I used SCP for this task, but it didn't work flawlessly with what the task needed. I got it to work eventually, but I figured I might as well try it with RSYNC to see the difference. I found out the flags it can use and the options it needed, and how it can run with sudo unlike SCP. Now I know the differences between the two and when is best to use one or the other. 
 
