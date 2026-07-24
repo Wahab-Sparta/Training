@@ -39,7 +39,7 @@ There are several benefits of having an automated pipeline like this:
 
 ## GitHub SSH Key
 
-To create a GitHub SSH Key, please refer to [this documentation](../SSH_with_GitHub/Using_SSH_to_push_GitHub.md)
+To create a GitHub SSH Key, please refer to [this documentation](../SSH_with_GitHub/Create_SSH_key_for_GitHub.md)
 
 ## GitHub Webhook
 
@@ -91,6 +91,7 @@ These commands will go into your app directory, do a clean install of the app an
   * Under "Post-build Actions" click "Add post-build action" and choose "Build other projects".
   * Choose the Job 2 project you have created and select "Trigger only if build is stable".
 
+
 ## Job 2 - Merging
 
 For this job, you can copy the project from Job 1.
@@ -100,7 +101,9 @@ For this job, you can copy the project from Job 1.
   **Deselect "GitHub hook trigger for GITScm polling" under "Build Triggers.**   
   If you do not deselect, it will run Job 2 right after you make a push to GitHub.
 
-There are a couple of different for merging your changes from dev to main.
+There are a couple of different methods for merging your changes from dev to main.
+
+---
 
 ### Method 1 - Git Commands
 This method will use Execute Shell and only use Git commands.
@@ -115,6 +118,8 @@ This method will use Execute Shell and only use Git commands.
   git push origin main
 ```
 This code will switch to the main branch, merge with the dev branch and push the merge to main.
+
+---
 
 ### Method 2 - Pre-build merge + Git Publisher merge results
 This method will use a pre-build merge and then push to git.
@@ -137,6 +142,9 @@ This method will use a pre-build merge and then push to git.
    If you do not delete the "Execute Shell" block, your job may not run successfully.
 2. Deselect "SSH Agent" under "Build Environment"  
    This isn't necessary, but the SSH Agent isn't used in this method.
+
+---
+
 ### Method 3 - Only Git Publisher push
 This way technically does not do a merge, but will still push your changes from the dev branch to the main branch.
   1. Change the "Branches to build" under "Source Code Management" to "*/dev"
@@ -153,15 +161,17 @@ This way technically does not do a merge, but will still push your changes from 
 2. Deselect "SSH Agent" under "Build Environment"  
    This isn't necessary, but the SSH Agent isn't used in this method.  
 
+---
 
 ⚠️ After adding **ONE** of these methods **go back to Job 1** and add the Post Build Action mentioned at the [end of Job 1](#job-1---testing).  
 If you do not do this, Job 2 will **NOT** trigger.
+
 
 **COMPLETE THIS LAST STEP ONLY AFTER COMPLETING JOB 3**
   * Under "Post-build Actions" click "Add post-build action" and choose "Build other projects".
   * Choose the Job 3 project you have created and select "Trigger only if build is stable".
 
-### Job 3 - Uploading to EC2
+## Job 3 - Uploading to EC2
 For this job, you can copy the project from Job 1. 
   1. Create a new item, enter a name for your item and choose enter your Job 3 name at the bottom to copy from it.
   2. Enter a description describing what your job will do.
@@ -177,6 +187,8 @@ For this job, you can copy the project from Job 1.
   6. If you didn't copy the project from Job 1, click "Add build step" under "Build Steps" and choose "Execute shell"
 
 Next we need use the Execute Shell block to update the code in the live EC2 instance with the new code from your git repo. There are two ways of doing this, one with an `scp` command and one with an `rsync` command. Code may be different depending on where you have stored your app.
+
+---
 
 ### Method 1 - SCP (Secure Copy)
 If you have stored your code in the root directory, by using `scp` you cannot directly copy into the root directory due to permissions. Instead you can either:
@@ -194,9 +206,9 @@ EOT
 * You do not need the first command if your app is not in the root directory.
 * 📝NOTE: `sudo pm2 restart TTT` TTT is the name of my PM2 process, instead you can use `index.js`
 
-<br>
+### OR
 
-1. Copy the app code into /home/ubuntu, then SSH in and use `sudo` to `cp` (copy) it to the root directory where the app folder lives.
+2. Copy the app code into /home/ubuntu, then SSH in and use `sudo` to `cp` (copy) it to the root directory where the app folder lives.
 
 ```
 scp -o StrictHostKeyChecking=no -r app ubuntu@<ENTER EC2 PUBLIC IP>:/home/ubuntu
@@ -210,6 +222,8 @@ EOT
 ```
 * I did `rm -r app` to remove the app copied into /home/ubuntu, so there are not unnecessary files wasting space.
 * `-o StricHostKeyChecking=no` is used to automatically say Yes to the prompt when SSHing into a VM for the first time. If this isn't used, your commands may not run.
+
+---
 
 ### Method 2 - RSYNC (Remote Sync)
 
@@ -228,7 +242,6 @@ EOT
   * `-z` Compresses the file data during transfer to reduce network bandwidth.
   * `-e` Allows you to specify the remote shell (e.g. SSH) to use for the connection
 * `--rsync-path="sudo rsync"` This allows rsync to run as super user, allowing us to execute the command in the root directory.  
-
 
 📝NOTE: Remember to check if the path to your app directory is correct, otherwise it will try to copy or sync your app to the wrong directory.
 
