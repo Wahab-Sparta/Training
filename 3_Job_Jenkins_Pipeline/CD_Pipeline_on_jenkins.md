@@ -97,7 +97,8 @@ These commands allow the agent to go into your app directory, do a clean install
 For this job, you can copy the project from Job 1.
   1. Create a new item, enter a name for your item and choose enter your Job 1 name at the bottom to copy from it.
   2. Enter a description describing what your job will do.  
-  ⚠️ **IF YOU COPIED PROJECT FROM JOB 1**  
+
+⚠️ **IF YOU COPIED PROJECT FROM JOB 1**  
   **Deselect "GitHub hook trigger for GITScm polling" under "Build Triggers.**   
   If you do not deselect, it will run Job 2 right after you make a push to GitHub.
 
