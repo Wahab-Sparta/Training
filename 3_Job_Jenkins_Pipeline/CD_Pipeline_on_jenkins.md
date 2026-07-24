@@ -2,6 +2,25 @@
 
 We want to be able to make a change on our dev branch, push the changes to GitHub and automatically have our changes tested, merged with main branch (if tests were successful), and uploaded to a running EC2 instances to instantly see the changes go live.
 
+- [3 Job CI/CD Pipeline on Jenkins](#3-job-cicd-pipeline-on-jenkins)
+  - [What do we need?](#what-do-we-need)
+  - [Diagram of Pipeline](#diagram-of-pipeline)
+  - [Benefits](#benefits)
+  - [GitHub SSH Key](#github-ssh-key)
+  - [GitHub Webhook](#github-webhook)
+  - [Jenkins CICD Pipeline](#jenkins-cicd-pipeline)
+  - [Job 1 - Testing](#job-1---testing)
+  - [Job 2 - Merging](#job-2---merging)
+    - [Method 1 - Git Commands](#method-1---git-commands)
+    - [Method 2 - Pre-build merge + Git Publisher merge results](#method-2---pre-build-merge--git-publisher-merge-results)
+    - [Method 3 - Only Git Publisher push](#method-3---only-git-publisher-push)
+  - [Job 3 - Uploading to EC2](#job-3---uploading-to-ec2)
+    - [Method 1 - SCP (Secure Copy)](#method-1---scp-secure-copy)
+    - [Method 2 - RSYNC (Remote Sync)](#method-2---rsync-remote-sync)
+  - [Testing the Pipeline](#testing-the-pipeline)
+- [Blockers and Challenges](#blockers-and-challenges)
+- [What did I learn?](#what-did-i-learn)
+
 ## What do we need?
 
 * Git repo of the TicTacToe app
@@ -207,7 +226,7 @@ EOT
 * You do not need the first command if your app is not in the root directory.
 * 📝NOTE: `sudo pm2 restart TTT` TTT is the name of my PM2 process, instead you can use `index.js`
 
-### OR
+### OR <!-- omit in toc -->
 
 2. Copy the app code into /home/ubuntu, then SSH in and use `sudo` to `cp` (copy) it to the root directory where the app folder lives.
 
@@ -256,3 +275,35 @@ If your timestamp shows up on the app (see below), then your pipeline worked!
 It's recommended to run your pipeline multiple times to see different changes. An example is below of the app running with 2 different hardcoded timestamps.  
 ![alt text](Images/timestap_1640.png)
 ![alt text](Images/timestamp_1643.png)
+
+# Blockers and Challenges
+
+### Blocker 1 <!-- omit in toc -->
+Issue: Jenkins worker node couldn't SSH into machine  
+Cause: Terminal gave a prompt to verify the authenticity of the host, the worker node couldn't respond so it timed out.  
+Solution: Use `-o StricHostKeyChecking=no` to automatically respond with Yes
+
+### Blocker 2 <!-- omit in toc -->
+Issue: Couldn't `SCP` into root directory  
+Cause: Did not have the correct permissions to change anything in the root directory  
+Solution: There were two solutions I found to this:
+1. I used `SCP` to copy the app folder to /home/ubuntu, then SSH in as user Ubuntu, so I can use `sudo` to copy the folder into the root directory
+2. SSH in first and use `chown` which can change the owner of a directory. I changed the owner of the app directory in the root directory, then I was able to use `SCP` to copy the files to the root directory.
+
+### Blocker 3 <!-- omit in toc -->
+Issue: Couldn't rsync into root directory
+Cause: Did not have the correct permissions to change anything in the root directory  
+Solution: Using `--rsync-path="sudo rsync"` allowed me to run rsync as a super user, giving me the permissions I needed to be able to access the root directory.
+
+# What did I learn?
+
+This task was a really good learning experience for me. I did a lot of testing with Jenkins to see what works and how things work.  
+
+Specifically, during Job 2, I learnt about how merging branches in git works. There was a method I figured out on Jenkins that doesn't actually merge the two branches, but just simply moves the branch pointer (the HEAD of the branch) to the latest commit. I figured out that this was a type of merge, it's called a fast-forward merge.  
+
+I also gained experience with the SCP and RSYNC commands. I had used SCP in the past, but RSYNC was brand new to me. So I used SCP for this task, but it didn't work flawlessly with what the task needed. I got it to work eventually, but I figured I might as well try it with RSYNC to see the difference. I found out the flags it can use and the options it needed, and how it can run with sudo unlike SCP. Now I know the differences between the two and when is best to use one or the other. 
+
+I've heard of webhooks in the past but I never knew what they were until now, and it's pretty simple. It just notifies another system when an event has happened. More specifically it sends a HTTP POST request to a specified URL when an event occurs.
+
+Lastly, I learnt a little more about security and authentication by using the GitHub SSH keys. I also had to create my own GitHub SSH keys using the terminal, instead of having a website do it for me. 
+I've already used the AWS SSH keys, so I knew about how it needed those to connect to an instance, but I didn't realise how much you would need it for other systems, like GitHub.
