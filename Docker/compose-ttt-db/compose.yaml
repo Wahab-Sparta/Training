@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mongo:8.2.5
+    ports: 
+    - "27017:27017"
+    container_name: "mongodb"
+
+  app:
+    image: wahabsparta/tech610-tttapp:1.2.0
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://db:27017/tictactoe
+    container_name: "ttt"
+    depends_on: 
+      - db
+    command: sh -c "node /app/seeds/seed.js && node /app/index.js"
