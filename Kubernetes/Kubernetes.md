@@ -91,11 +91,26 @@
     * Used for persistent storage
 
 * How to mitigate security concerns with containers
+  * Use maintained container images
+  * Use automatic vulnerability scanning on container registry
+  * Use your own security scanning tool on your container images
+  * NEVER run containers with root privileges
+  * Monitor and/or log of container activity
 
 * Maintained images
-
-  * What are they
+  * A docker image that is regularly updated/manages by a maintainer
+  * Usually the maintainer of the image is an organisation, a community, or an individual.
+    * Example: Canonical maintain Ubuntu images
   * Pros and cons of using maintained images for your base container images
+    * Pros:
+      * Better security because they are regularly patched
+      * Up to date
+      * Better stability and reliability
+      * More support and documentation available
+      * Usually adhering to best practices/industry standards
+      * May be more streamlined and optimised for performance and/or smaller image size
+    * Cons:
+      * 
 
 
 ## Commands
