@@ -9,7 +9,7 @@ spec:
     matchLabels:
       app: nginx  # look for this label/tag to match with k8 service
   # create a replica set of this with instances/pods
-  replicas: 3
+  replicas: 5
   template:
     metadata:
       labels:
@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: daraymonsta/nginx-257:dreamteam # the image you created to run nginx in a container
+        image: wahabsparta/tech610-nginx-auto:1.0 # the image you created to run nginx in a container
         ports:
         - containerPort: 80
