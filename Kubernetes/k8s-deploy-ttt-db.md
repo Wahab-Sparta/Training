@@ -135,3 +135,6 @@ spec:
     db: mongodb
   type: ClusterIP 
 ```
+
+* Although the services are created in the same file, they are two different services for two different deployments. They are separated by `---`. 
+* The same can be done for deployments.
