@@ -1,8 +1,25 @@
+- [What is SOC?](#what-is-soc)
+  - [Key functions](#key-functions)
+  - [Common technologies](#common-technologies)
+  - [Processes](#processes)
+  - [Challenges](#challenges)
+  - [SoC Best Practices](#soc-best-practices)
+  - [Roles](#roles)
+  - [Threat Hunting](#threat-hunting)
+  - [Common Event types to look out for](#common-event-types-to-look-out-for)
+- [What is SIEM?](#what-is-siem)
+  - [Real world analogy of SIEM](#real-world-analogy-of-siem)
+  - [Examples of SIEM software in 2026](#examples-of-siem-software-in-2026)
+  - [What is Splunk?](#what-is-splunk)
+  - [What can Splunk be used for and why use it?](#what-can-splunk-be-used-for-and-why-use-it)
+  - [What is a Splunk/SOC Analyst?](#what-is-a-splunksoc-analyst)
+
+
 # What is SOC?  
 
 SOC stands for Security Operations Center. It's a team and facility responsible for continuous monitoring, threat detection and incident response across an organisation's IT infrastructure.
 
-## Key function
+## Key functions
 
 * Security Monitoring
   * Continuously monitor systems, networks, and cloud environments for suspicious activity.
@@ -21,7 +38,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
 * Compliance & Reporting
   * Produce reports for audits, regulations, and management.
 
-## Common technologies?
+## Common technologies
 
 * SIEM (Security Information and Event Management)
   * Used to collect logs from many areas of thinfrastructure
@@ -41,7 +58,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
     * SentinelOne
 
 ## Processes
-### Preparation, Planning, Prevention
+### Preparation, Planning, Prevention <!-- omit in toc -->
 * Asset Inventory  
   * Maintain an exhaustive inventory of everything that must be protected inside or outside the data center. 
     * E.g. Apps, databases, servers, cloud services, endpoints, etc
@@ -69,7 +86,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
     * The latest threat intelligence:
       * News and information about cyberattacks and the hackers who perpetrate them.
       * Gathered from social media, industry sources and the dark web
-### Monitoring, Detection, Response
+### Monitoring, Detection, Response <!-- omit in toc -->
 * Continuous Monitoring
   * Monitors the entire extended IT infrastructure 24/7/365 for signs of known exploits and any suspicious activity
     * Applications
@@ -86,7 +103,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
 * Incident Response
   * Limit the damage from a cyberattack
   * Root cause investigation to determine the vulnerabilities that gave hackers access to the system, as well as other facts (bad password hygiene, poor enforcement of policies, etc.).
-### Recovery, Refinement, Compliance  
+### Recovery, Refinement, Compliance <!-- omit in toc -->
 * Recovery and Remediation
   * Recovers the impacted assets to their state before the incident. E.g.:
     * Wiping, restoring and reconnecting disks, user devices and other endpoints
@@ -119,7 +136,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
 * Skills Shortage
   * Not enough skilled cybersecurity professionals. Finding and keeping security experts is difficult and there is high turnover. This can be due to the job being stressful and exhausting, leading to burnout and fatigue.
 
-## SoC best practices?
+## SoC Best Practices
 * Monitor 24/7
 * Automate repetitive tasks
 * Tune SIEM rules regularly
@@ -130,7 +147,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
 * Perform regular threat hunting
 * Implement MFA (Multi-Factor Authentication)
   
-## Roles?
+## Roles
 * Level 1 SOC Analyst
   * First line of defence
   * Monitors the SIEM dashboard
@@ -168,11 +185,11 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
     * Co-ordinating recovering efforts
     * Ensuring normal business operations are restored while minimising damage
 
-## Threat hunting?
+## Threat Hunting
 Mentioned previously, threat hunting is a proactive cybersecurity practice where security experts actively search networks and systems to find hidden attackers that have bypassed automated security tools.  
 Instead of waiting for an alert to trigger, a threat hunter will assume an attacker is already inside the environment. This method can uncover stealthy malicious activity before it's able to cause widespread operational damage.
 
-### How Threat Hunting works
+### How Threat Hunting works <!-- omit in toc -->
 1. Form a hypothesis  
 Threat hunters can use current threat intelligence or security trends to make educated guesses on how an attacker will attempt to attack and get into the network and systems.
 1. Gather intelligence  
@@ -184,7 +201,7 @@ When hunters uncover an active threat, they will immediately trigger containment
 3. Improve automated defences  
 The team will use the lessons learnt from the hunt to update automated firewall rules, endpoint detection signatures, security policies
 
-## Common Event types to look out for?
+## Common Event types to look out for
 * Multiple failed login attempts
 * Privileged account logins
 * Malware detection
@@ -198,46 +215,138 @@ The team will use the lessons learnt from the hunt to update automated firewall 
 * Phishing email detections
 * Security logs cleared
 
-# What is SIEM? 
+<br>
+
+# What is SIEM?
 SIEM stands for Security Information and Event Management.  
 SIEM is a cybersecurity software solution that collects, centralises, and analyses log data and security alerts from across an organisation's entire digital infrastructure in real time to help security teams detect, investigate and stop threats.
 
 ## Real world analogy of SIEM
 
-Imagine a security guard watching 10 monitors all showing different live camera feed. 
-* Examples of SIEM software in 2026
-* What is Splunk?
-* What can Splunk be used for? Why use it?
-* What is a Splunk/SOC analyst?
+Imagine a large shopping centre with hundres of stores and huge parking lot. There would be way too many entrances to have guarded at all times. Instead we have:
+* Security cameras   
+The cameras can detect and record any movement.
+* Sensors & Alarms  
+The sensors will also detect movement or doors opening.  
+Alarms will sound if there is an intruder if a sensor goes off in a restricted area.
+* Control room  
+The control room can monitor camera feed, sensors and alarms (while being able to replay).
+* Security guards  
+There are security guards in the control room watching and making sure nothing is wrong.   
+There can also be security guards roaming around the centre.
+
+Now, if we think this in reference to SIEM: the cameras, sensors, and alarms are the endpoints on a network, such as the servers, firewalls, cloud services, applications, user devices, etc.  
+
+All camera feed, sensor and alarm data are sent to the control room, just like how all the logs from all endpoints are centralised in a SIEM.
+
+The security guards in the control room are for suspicious patterns. For example, they can be watching the cameras to see if people are acting suspicious, such as trying to open locked doors or enter staff-only areas.   
+Apart from having to manually watch every camera, their systems can alert and record any movements on cameras, any sensors or alarms activated.  
+To correlate this to SIEM, the security guards would be the SOC analysts who watch SIEM dashboards and monitor any suspicious logs, trying to find patterns. They also will not need to manually check logs 24/7 either, they will have alerts based on suspicious activity.
+
+Lastly, the security guards roaming the centre are looking for any bad actors who got inside past the cameras/sensors without setting off any alarms, just like how the threat hunters are trying to find if anyone made it past the security barriers.
+
+## Examples of SIEM software in 2026
+  * Splunk
+  * Microsoft Snetinel
+  * IBM QRadar
+  * Crowdstrike Falcon
+  * Securonix Unified Defence
+
+## What is Splunk?
+
+Splunk is a software platform that is used to search, monitor, analyse data generated from IT systems, such as applications, networks, user devices, etc.    
+Splunk Enterprise Security is security focused platform that you can buy and install with the base version of Splunk. This is the SIEM platform that can index, monitor and correlate security data from any source to give security teams real-time threat detection, investigation, and automated response capabilities.
+
+## What can Splunk be used for and why use it?
+
+1. Security Monitoring
+   * Can detect cyberattack in real time
+   * Monitor suspicious activity
+   * Can identify malware
+   * Investigate security incidents
+2. IT Operations Monitoring
+   * Can track health and performance of the infrastructure. E.g.:
+     * CPU usage
+     * Memory usage
+     * Network performance
+3. Troubleshooting & Root Cause Analysis
+   * If an application fails, Splunk can be used to help quickly find the cause as all logs would be on a single interface
+4. Application Performance Monitoring
+   * Can monitor applications by tracking:
+     * Response times
+     * Error rates
+     * Transaction failures
+     * API performance
+     * User activity
+5. Cloud & Network Monitoring
+   * Can monitor cloud environments like AWS, Azure, or GCP
+     * Virtual machines
+     * Containers
+     * Cloud storage
+   * Can monitor and analyse network performance e.g.:
+     * Bandwidth usage
+     * Firewall activity
+     * Router logs
+
+Organisations have chosen to use Splunk for many reasons:
+* Scalability. Splunk is designed to handle environments at a large scale.
+* Flexibility. Splunk supports cloud, on-prem, and hybrid enviroments.
+* Centralised hub for logs and data collection
+  * If you have a huge infrastructure with multiple databases, applications, servers, networks, etc. All can be found be collected by Splunk, and displayed in one central place. 
+* Speeds up investigations. Splunk can search through millions of events in seconds, unlike manually searching through events.
+* Detects problems quickly. Splunk can analyse data and alert teams for multiple different reasons. E.g.:
+    * Unusual number of failed logins occur
+    * Application begins to fail
+    * Network goes offline
+* Handles large volumes of data
+
+## What is a Splunk/SOC Analyst?
+
+A Splunk/SOC analyst is a cybersecurity professional who uses Splunk and maybe other tools to monitor, detect, investigate and response to cyber threats within an organisation.  
+It's very similar to a SOC Analyst mentioned previously, the only difference is having an expertise in Splunk.  
+
 * What are the versions of Splunk and how are they different?
+
 * What are the components of Splunk Architecture?
   * Search Head
   * Universal Forwarders
   * Indexers
 
 * What are some of the options for deploying Splunk (Search Head)?
+
 * What are some of the basic terms in Splunk?
+
 * What type of data/files does Splunk usually ingest?
+
 * How can Splunk onboard/ingest data?
   * What are events?
 
 * What is SPL?
+
 * Show some basic examples of SPL:
   * Basic searches
   * Basic transformations
   * Basic visualisations
 
 * What are some of the things you can produce in Splunk (e.g. * dashboards)?
+
 * Best practices for securing data on Splunk? (optional)
+
 * What are Splunk apps vs Splunk addons?
+
 * Case studies of Splunk being used?
   * Security/SOC
   * Data/business analysis
   * Any others
 
 * Best practices for securing data on Splunk?
+
 * Splunk certification path? Certifications related to or helpful for SOC?
+
 * Encrypting data in Splunk? (super optional)
+
 * AI with Splunk? (super optional)
+
 * Recommended datasets for Splunk? (super optional)
+
 * Guides/walktrhoughs/demos for Splunk? (Super optional)
