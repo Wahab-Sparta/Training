@@ -9,7 +9,7 @@
   * AI assisted hacks
   * Need to protect data (as well as applications & services)
 * Understanding how they can make best use of AI
-* Containerisation -> Kubernetes
+* Containerisation -> Kubernetes | This can be a big jump in expertise required
 
 ## Intro to Kubernetes
 
@@ -62,13 +62,13 @@
   * Control plane vs data plane
     * Control plane
       * Has master node(s)
-      * Controller Manager monitors for changes in the cluster, if changes do need to be changed it goes through the API server.
-      * API server is the central hub for all communication
-      * Scheduler creates worker nodes based on resource availability
+      * Controller Manager monitors for changes in the cluster, if changes do need to be made it goes through the API server.
+      * API server is the central hub for all interactions
+      * Scheduler specifies where to allocate the resources. It creates worker nodes based on resource availability
       * ETCD is a database that keeps tracks of whats happening in the cluster using key value pairs
     * Data plane has worker node(s)
       * Kubelet connects directly to and receives instructions from the API server on the Control plane
-      * kube-proxy controls the network routing
+      * kube-proxy updates and configures networks rules on the worker node. It makes sure that the network routing always stays in sync with the rest of the cluster.
       * Container Engine
       * Pods
 
@@ -128,4 +128,16 @@ kubectl apply -f <filename>
 
 kubectl delete -f <filename>
 # Removes deployment
+
+kubectl delete pod/<podname>
+# Deletes pod
+
+kubectl edit deploy nginx-deployment
+# Opens an editor for you to edit the deployment
+
+kubectl scale --current-replicas=5 --replicas=6 deployment/nginx-deployment
+# Increases number of replicas
+
+kubectl describe deployment 
+# Can describe specific things like pods
 ```
