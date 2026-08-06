@@ -48,7 +48,7 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
 ## Common technologies
 
 * SIEM (Security Information and Event Management)
-  * Used to collect logs from many areas of thinfrastructure
+  * Used to collect logs from many areas of the infrastructure
   * Correlates events
   * Generates Alerts
   * Most popular tools:
@@ -174,16 +174,16 @@ SOC stands for Security Operations Center. It's a team and facility responsible 
   * Conducts complex threat hunting
   * Analyses sophisticated attacks
   * Mentors junior analysts
-* SOC Manager
+* SOC Manager - Usually Level 4 SOC
   * Oversees the SOC team and daily operations
   * Manages staffing, incident escalation, performence metrics, reporting, budgeting, and communication with leadership
   * Ensures analysts follow procedures
   * Continuously improves SOC processes
-* Threat Hunter
+* Threat Hunter - Usually Level 3 SOC
   * Proactively searches for hidden attackers who may have bypassed automated security tools
   * Uses hypothesis (educated guess or proposed explanation about potential adversary behaviours), behavioural analysis, and threat intelligence to identify stealthy threats before they cause harm
   * Unlike alert-driven analysts, threat hunters actively look for unknown threats
-* Incident Responder
+* Incident Responder - Usually Level 2 SOC
   * Leads the repsonse during security incidents
   * Quickly contains attacks by:
     * Isolating systems
@@ -322,9 +322,6 @@ It's very similar to a SOC Analyst mentioned previously, the only difference is 
 * Splunk Free
   * Same as Splunk Enterprise but with a free license
   * Limited features
-* Splunk Universal Forwarder
-  * Only sends data from endpoints to Splunk
-  * Does not analyse or store data
 * Splunk Cloud Platform
   * Provides same core capabilities as Enterprise, but Splunk will host and manage it
 * Splunk Enterprise Security (ES)
@@ -375,7 +372,6 @@ It's very similar to a SOC Analyst mentioned previously, the only difference is 
 * Host - The machine that generated the data
 * Source - Actual input location (E.g. file, API, server port, etc)
 * Sourcetype - What kind of data it is
-* 
 
 ## Types of data/files does Splunk usually ingest
 * Any kind of machine data
