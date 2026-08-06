@@ -13,6 +13,13 @@
   - [What is Splunk?](#what-is-splunk)
   - [What can Splunk be used for and why use it?](#what-can-splunk-be-used-for-and-why-use-it)
   - [What is a Splunk/SOC Analyst?](#what-is-a-splunksoc-analyst)
+  - [Different versions of Splunk](#different-versions-of-splunk)
+  - [Components of Splunk Architecture](#components-of-splunk-architecture)
+  - [Some options for deploying Splunk](#some-options-for-deploying-splunk)
+  - [Basic terms in Splunk](#basic-terms-in-splunk)
+  - [Types of data/files does Splunk usually ingest](#types-of-datafiles-does-splunk-usually-ingest)
+  - [How can Splunk onboard/ingest data?](#how-can-splunk-onboardingest-data)
+  - [SPL (Search Processing Language)](#spl-search-processing-language)
 
 
 # What is SOC?  
@@ -305,23 +312,95 @@ Organisations have chosen to use Splunk for many reasons:
 A Splunk/SOC analyst is a cybersecurity professional who uses Splunk and maybe other tools to monitor, detect, investigate and response to cyber threats within an organisation.  
 It's very similar to a SOC Analyst mentioned previously, the only difference is having an expertise in Splunk.  
 
-* What are the versions of Splunk and how are they different?
+## Different versions of Splunk
 
-* What are the components of Splunk Architecture?
+* Splunk Enterprise
+  * Collects logs from servers, applications, network devices, and databases
+  * Can search data using SPL
+  * Can build dashboards and alerts
+  * Can create reports
+* Splunk Free
+  * Same as Splunk Enterprise but with a free license
+  * Limited features
+* Splunk Universal Forwarder
+  * Only sends data from endpoints to Splunk
+  * Does not analyse or store data
+* Splunk Cloud Platform
+  * Provides same core capabilities as Enterprise, but Splunk will host and manage it
+* Splunk Enterprise Security (ES)
+  * Uses data stored in Splunk and helps identify security threats
+  * Instead of just showing logs it can:
+    * Detect suspicious activity
+      * Has hundreds of pre-built detection rules (called correlation searches)
+      * Searches can run on a schedule and look for patterns in the data
+    * Calculates risk scores
+    * Correlate events from multiple sources
+    * Create noteable events for analyst
+      * If a detection rule finds something important, a notable event is created
+      * Analysts will see a queue of notable events instead of having to watch and sift through logs all day
+    * Support investigations and threat hunting
+      * Provides tools to investigate
+      * For example, analysts are able to see:
+        * Which user logged in
+        * What IP address a request came frm
+        * Which devices was used
+        * What happened befor an after a login
+* IT Service Intelligence (ITSI)
+  * Uses the data in splunk to monitor the health of business services
+  * Correlates metrics to identify health issues
+  * Helps operations teams resolve issues quicker
+
+## Components of Splunk Architecture
   * Search Head
+    * Provides the user interface and REST API for users to run queries, build dashboard, and set alerts
   * Universal Forwarders
+    * Sends log data from endpoints to Splunk
   * Indexers
+    * Receives log data and parses it into events. Writes it to a desk as searchable indexes.
 
-* What are some of the options for deploying Splunk (Search Head)?
+## Some options for deploying Splunk
+* Single instance deployment
+  * Single instance seres as both search head and indexer, providing both search and storage capability. 
+  * Aa single instance deployment can support one or two users running concurrent searches
+* Distributed deployment 
+  * Recommended for the Splunk App for PCI Compliance (Payment Card Industry Data Security Standard).
+  * Dedicated search head provides the web interface and search management
+  * A collection of indexers provide improved search performance by distributing the workload of searches across multiple nodes
 
-* What are some of the basic terms in Splunk?
+## Basic terms in Splunk
+* Events - Single piece of indexed data
+* Indexes - Storage folders for data
+* Fields - Name and value pairs
+* SPL - The search language used in Splunk, Splunk Processing Language
+* Host - The machine that generated the data
+* Source - Actual input location (E.g. file, API, server port, etc)
+* Sourcetype - What kind of data it is
+* 
 
-* What type of data/files does Splunk usually ingest?
+## Types of data/files does Splunk usually ingest
+* Any kind of machine data
+* Plain text files
+* JSON
+* XML
+* CSV
+* Windows event logs
+* Registry changes
+* Performance metrics
+* Network traffic
+* HTTP events
 
-* How can Splunk onboard/ingest data?
-  * What are events?
+## How can Splunk onboard/ingest data?
+Splunk can ingest data from many sources such as servers, applications, databases, network devices, etc. Splunk can:
+* Monitor files directly
+* Utilise Universal Forwarder
+  * Collects data from servers and it's endpoints
+* Listen for data sent over a network
+* Listen for applications sending data using HTTP/HTTPS
 
-* What is SPL?
+
+## SPL (Search Processing Language)
+Splunk's proprietary query language used to search, filter, analyse and visualise machine data.
+* Uses the pipe character to pass the output of one command as the input to the next command on the right (E.g. ```index=web_logs status=500 | stats count by clientip```)
 
 * Show some basic examples of SPL:
   * Basic searches
