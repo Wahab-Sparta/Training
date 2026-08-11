@@ -18,6 +18,17 @@ Table of Contents:
   - [Creating an Alert KO](#creating-an-alert-ko)
   - [Creating an Event Type](#creating-an-event-type)
 - [Module 7: Show me the Fields!](#module-7-show-me-the-fields)
+- [Module 8A: Search Processing Language](#module-8a-search-processing-language)
+- [Module 8B: Demo of Building SPLs and Basic Commands](#module-8b-demo-of-building-spls-and-basic-commands)
+  - [Keyboard shortcuts:](#keyboard-shortcuts)
+  - [Example Searches:](#example-searches)
+- [Module 9A: Transforming Your Search](#module-9a-transforming-your-search)
+- [Module 9B: Transforming Commands](#module-9b-transforming-commands)
+  - [Formatting](#formatting)
+- [Module 10A: What are the Events Telling Me?](#module-10a-what-are-the-events-telling-me)
+- [Module 10B: Demo of the Transaction Command](#module-10b-demo-of-the-transaction-command)
+- [Module 11A: Manipulating Your Data](#module-11a-manipulating-your-data)
+- [Module 11B: Demo of eval, where, and search](#module-11b-demo-of-eval-where-and-search)
 
 ## Module 2: What Makes Up Splunk
 
@@ -359,3 +370,161 @@ You can select a field from the sidebar and create reports with a single click. 
 To simplify:  
 If you want to search for events that have ```categoryID``` as a field but not include ```SPORTS``` as a field value, then use ```!=```.  
 If you want to search for events that have and doesn't have ```categoryID``` as a field value but not include ```SPORTS``` as a field value, then use ```NOT```.
+
+## Module 8A: Search Processing Language
+
+Orange: Command Modifiers ```OR, NOT, AND, as, by```  
+Blue = The Commands ```Stats, Table, Rename, Dedup, Sort, Timechart```  
+Green = The Arguments ```Limit, Span```  
+Purple = The Functions ```Tostring, Sum, Values, Min, Max, Avg```  
+
+Commands:  
+* Table - Creates a table based off the variables and arguments set in the search
+* Rename - Renames fields. Can be fields which currently exist in the data, or fields you've calculated and built in your searches
+* Fields - Allows you to call on fields you want to include or exclude from your search
+* Dedupe - De-duplicate. Removes duplicated values from the results
+* Sort - Sorts your results 
+
+## Module 8B: Demo of Building SPLs and Basic Commands
+
+
+### Keyboard shortcuts:  
+New Line - ```Shift + Enter```  
+Auto format search - ```Ctrl + \```  
+Expand search - ```Ctrl + Shift + E```
+
+You can change your preferences on Splunk by going to Account name > Preferences.  
+![alt text](images/image-67.png)  
+
+### Example Searches:
+Show the total number of bytes in the web and security indexes under the name "Total_Bytes".  
+![alt text](images/image-65.png)  
+
+We can make this more readable by adding an eval command.  
+![alt text](images/image-66.png)
+
+Limiting CategoryId to top 6 categories where purchases have been made  
+![alt text](images/image-68.png)  
+
+Showing total purchases within the top 6 categories  
+![alt text](images/image-69.png)  
+
+Table showing all actions, with the ip, categoryId and status  
+![alt text](images/image-70.png)  
+
+Updated table with new names for the fields, removed any null actions and removed status
+![alt text](images/image-71.png)
+
+Showing total number of events using specific IPs  
+![alt text](images/image-72.png)  
+
+## Module 9A: Transforming Your Search
+
+A transforming command is a search command that orders the result into a data table.  
+Transforming commands transform the specified cell value for each event into numerical values that Splunk can use for statistical purposes.  
+If you're running Splunk in smart mode, using a transform command, it use fast mode search.
+
+3 types of transform commands:
+* Top
+  * Finds the top common values of a field in a table
+  * Top 10 results by default
+  * Can be used with arguments
+* Rare
+  * Finds the least common values of a field in a table
+  * Opposite of top
+* Stats
+  * Calculate statistics
+  * Functions: count, dc, sum, avg, list, values, etc.
+
+## Module 9B: Transforming Commands
+
+If you have null values, you can use ```fillnull value="N/A"```. Now N/A will be displayed in every null value.
+
+Top:  
+![alt text](images/image-73.png)
+
+Note! You can use Chart to visual your data in different types of graphs:   
+![alt text](images/image-74.png)  
+
+Shows top 20 IPs that had failures
+![alt text](images/image-75.png)
+
+You can use ```showperc=f``` to remove the percentages  
+![alt text](images/image-76.png)  
+
+Rare:  
+![alt text](images/image-77.png)  
+
+![alt text](images/image-78.png)  
+
+Only show how many categories (dc means distinct):  
+![alt text](images/image-79.png)  
+
+Show only category names:  
+![alt text](images/image-80.png)  
+Another way, with alphabetical order:   
+![alt text](images/image-81.png)
+
+Number of actions per domain:  
+![alt text](images/image-82.png)
+
+Total amount of login attempts per IP, showing usernames:  
+![alt text](images/image-83.png)  
+
+### Formatting
+
+Can format your stats/tables with colours by clicking the paintbrush next to the field names.  
+![alt text](images/image-84.png)  
+
+Using this you can also change number formatting.  
+![alt text](images/image-85.png)  
+
+## Module 10A: What are the Events Telling Me?
+
+Events can be grouped into transactions based on the associated and related identified fields of interest.  
+If a relationship exists between the fields, then a transaction command can help enumerate that relation.  
+Transaction commands are very taxing on your environment. When possible, use stats instead.
+Stats will be faster, more efficient, and won't be as demanding of your resource.  
+Use transaction when you are looking for something specific, or when you are looking for correlations, when you want to see the beginnings and endings of something grouped together.  
+Use stats when you want to do calculations or group events.   
+Example arguments:
+* maxspan
+  * Max time between all related events
+  * Can be used to determine time between first and last event, showing the entire transaction length.
+* maxpause
+  * Sets max time between each event
+  * Default is 1 minute
+* startswith & endswith
+  * Can set variables for keywords, Windows Event IDs, etc.
+  * For example, you can set startswith as a WindowsEventID for a login, and endswith as a WindowsEventID for a log off.
+
+## Module 10B: Demo of the Transaction Command
+
+This search will generate a table which displays the ip and duration transactions for failed logins. It will only show transaction which at max happened within 3 minutes, and only a max time of 3 seconds between events.  
+![alt text](images/image-86.png)  
+
+By doing this, we can dive deep through these transactions and find if there are any problems.
+
+We can create a transaction command that can find each action a person did and how long the entire transaction was. We made the maxspan 10 minutes and maxpause 3 seconds between events
+![alt text](images/image-87.png)  
+We can also use ```endswith=purchase``` to see each person that ends the transaction with buying something.
+
+## Module 11A: Manipulating Your Data
+
+Eval command writes to a new or existing field. If a field already exists, eval will overwrite it, but it does not modify the underlying data. We are only evaluating and manipulating our fields that have already been written to disc to display the results we want.
+
+With eval command, you can covert epoch time to human readable datetime format.  
+You can also run if statements.
+
+Where and search can both filter your results.  
+Where is similar to eval and uses boolean operators to search the results, and only keeps results that are true.
+When the where command is used with double quotes, it will search for field values, if used with single quotes it will search for field names.  
+You want to use the where command to compare two fields or match a condition. It's also common to use with the fillnull command.
+
+Search command is used to look for keywords and uses wildcards. You can use it anywhere in the search, unlike where, which cannot be used before the first pipe.
+
+## Module 11B: Demo of eval, where, and search
+
+By using eval, I created a new field called epoch_time, which takes the ```_time``` value and returns the epoch time. They're in a table to show the difference.  
+
+![alt text](images/image-88.png)  
